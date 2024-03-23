@@ -8,7 +8,7 @@ public class Ball : MonoBehaviour
     [SerializeField]private Rigidbody rb;
     private bool isThrown = false;
 
-    // ความเร็วเริ่มต้นของการโยนลูกบอล
+    
     public float throwSpeed = 15f;
 
     private void Start()
@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !isThrown)
         {
-            // เมื่อคลิกที่เมาส์เริ่มต้นโยนลูกบอล
+            
             isThrown = true;
             ThrowBall();
         }
@@ -28,12 +28,17 @@ public class Ball : MonoBehaviour
 
     private void ThrowBall()
     {
-        // คำนวณทิศทางการโยนลูกบอลโดยใช้เมาส์
+        
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 throwDirection = mouseRay.direction;
 
-        // กำหนดความเร็วและเริ่มทิศทางการเคลื่อนที่
-        rb.velocity = throwDirection * throwSpeed;
+        
+        // คำนวณความเร่งโดยใช้สูตร F=ma
+        Vector3 force = rb.mass * throwDirection * throwSpeed;
+
+        // กำหนดความเร่งให้กับวัตถุ
+        rb.AddForce(force, ForceMode.Impulse);
+
     }
 
 }
