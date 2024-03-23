@@ -1827,6 +1827,8 @@ MonoBehaviour:
   respawnCountUI: {fileID: 194232220}
   respawnButton: {fileID: 364951064}
   maxRespawnCount: 1
+  scoreText: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: d885854ea089f044ca42d272a0269521, type: 3}
 --- !u!4 &1863804790
 Transform:
   m_ObjectHideFlags: 0

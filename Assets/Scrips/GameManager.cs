@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button respawnButton;
     [SerializeField] private int maxRespawnCount = 1; // Maximum number of respawns allowed
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private AudioClip hitSound;
+    private AudioSource audioSource;
     private GameObject currentBowlingBall;
     private int score = 0;
     private int respawnCount = 0; // Number of times respawned
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
         respawnButton.onClick.AddListener(RespawnBowlingBall);
         UpdateRespawnCountUI();
         textMeshProText.text = "Respawn";
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = hitSound;
 
     }
 
@@ -138,6 +142,14 @@ public class GameManager : MonoBehaviour
     void UpdateScoreUI()
     {
         scoreText.text = "Your Score: " + score.ToString(); 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Pins"))
+        {
+            audioSource.Play();
+        }
     }
     
 }

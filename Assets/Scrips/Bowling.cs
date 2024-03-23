@@ -43,15 +43,16 @@ public class Bowling : MonoBehaviour
         rb.AddForce(force, ForceMode.Impulse);
 
     }
-
-        void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
+        // Check if the collision is with a pin
         if (collision.gameObject.CompareTag("Pins"))
         {
-            
-            audioSource.PlayOneShot(hitSound);
+            // Play the hit sound
+            audioSource.Play();
         }
-    }
+    }        
+     
 
 
 
