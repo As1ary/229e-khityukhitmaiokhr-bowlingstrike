@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
     private GameObject[] pins;
     private bool ballRespawning = false;
     private int remainingPins;
-
-
     public static GameManager instance;
+    
+    
 
     void Start()
     {
@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
         {
             textMeshProText.text = "Next";
         }
+        PlayerPrefs.SetInt("Score", score);
+        PlayerPrefs.Save();
+        
     }
 
     private void SetPins()
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
                 pins[i].SetActive(false);
             }
             scoreUI.text = score.ToString();
+            
         }
         
         if (score > 0 && !ballRespawning)
@@ -87,8 +91,7 @@ public class GameManager : MonoBehaviour
         }
         if (remainingPins == 0)
         {
-            PlayerPrefs.SetInt("Score", score);
-            // Change scene after all pins are down
+
             SceneManager.LoadScene("SummarizeScene");
         }
         
@@ -133,11 +136,13 @@ public class GameManager : MonoBehaviour
         respawnCountUI.text = "Respawn Left: " + (maxRespawnCount - respawnCount);
     }
     void UpdateScoreUI()
-{
-    scoreText.text = "Your Score: " + score.ToString(); 
+    {
+        scoreText.text = "Your Score: " + score.ToString(); 
+    }
+    
 }
 
-}
+
 
 
     
