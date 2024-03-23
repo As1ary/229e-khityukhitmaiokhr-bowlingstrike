@@ -16,11 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text respawnCountUI;
     [SerializeField] private Button respawnButton;
     [SerializeField] private int maxRespawnCount = 1; // Maximum number of respawns allowed
+    [SerializeField] private TextMeshProUGUI scoreText;
     private GameObject currentBowlingBall;
     private int score = 0;
     private int respawnCount = 0; // Number of times respawned
     private GameObject[] pins;
     private bool ballRespawning = false;
+    private int remainingPins;
+
 
     public static GameManager instance;
 
@@ -52,11 +55,13 @@ public class GameManager : MonoBehaviour
 
     private void SetPins()
     {
+        remainingPins = pinsPositions.Length;
         for (int i = 0; i < pinsPositions.Length; i++)
         {
             Instantiate(pinsPrefab, pinsPositions[i].transform.position, Quaternion.identity);
         }
     }
+    
 
     private void SetBowling()
     {
@@ -80,6 +85,13 @@ public class GameManager : MonoBehaviour
             ballRespawning = true;
             respawnButton.gameObject.SetActive(true);
         }
+        if (remainingPins == 0)
+        {
+            PlayerPrefs.SetInt("Score", score);
+            // Change scene after all pins are down
+            SceneManager.LoadScene("SummarizeScene");
+        }
+        
     }
 
     private void UpdateRespawnButton()
@@ -112,7 +124,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Change scene after the final respawn
-            SceneManager.LoadScene("EndScene");
+            SceneManager.LoadScene("SummarizeScene");
         }
 }
 
@@ -120,6 +132,11 @@ public class GameManager : MonoBehaviour
     {
         respawnCountUI.text = "Respawn Left: " + (maxRespawnCount - respawnCount);
     }
+    void UpdateScoreUI()
+{
+    scoreText.text = "Your Score: " + score.ToString(); 
+}
+
 }
 
 

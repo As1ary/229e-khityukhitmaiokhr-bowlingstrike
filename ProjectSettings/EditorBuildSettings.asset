@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Scenes/SummarizeScene.unity
+    guid: e7d29a282a32a354b9a86b87e5b410f4
+  - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: a8cd9c58c44d3c24888305185bd00a36
   m_configObjects: {}

@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Bowling : MonoBehaviour
 {
     [SerializeField]private Rigidbody rb;
+    [SerializeField]private AudioClip hitSound;
     private bool isThrown = false;
+    private AudioSource audioSource;
 
     
-    public float throwSpeed = 15f;
+    public float throwAcceleration = 15f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -33,12 +36,23 @@ public class Ball : MonoBehaviour
         Vector3 throwDirection = mouseRay.direction;
 
         
-        // คำนวณความเร่งโดยใช้สูตร F=ma
-        Vector3 force = rb.mass * throwDirection * throwSpeed;
+        //F=ma
+        Vector3 force = rb.mass * throwDirection * throwAcceleration;
 
-        // กำหนดความเร่งให้กับวัตถุ
+        
         rb.AddForce(force, ForceMode.Impulse);
 
     }
+
+        void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Pins"))
+        {
+            
+            audioSource.PlayOneShot(hitSound);
+        }
+    }
+
+
 
 }
